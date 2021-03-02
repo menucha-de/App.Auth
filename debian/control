@@ -1,0 +1,8 @@
+Source: auth
+Maintainer: peraMIC <opensource@peraMIC.io>
+Build-Depends: debhelper, nodejs:native, golang:native, git, libc6
+ 
+Package: auth
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Auth Service

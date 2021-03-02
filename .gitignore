@@ -1,0 +1,12 @@
+/target
+/build.properties
+/lib
+/.metadata
+/.settings
+/coverage-report
+/__debub_bin
+/log.db
+/conf
+__debug_bin
+Util.Auth
+main

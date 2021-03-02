@@ -1,0 +1,274 @@
+openapi: 3.0.0
+info:
+  title: Auth
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /user/password:
+    put:
+      tags:
+      - User
+      summary: Change your password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Password'
+      responses:
+        "204":
+          description: Password changed
+        "404":
+          description: Login not found
+    delete:
+      tags:
+      - User
+      summary: Reset your password
+      responses:
+        "204":
+          description: Password reset
+        "404":
+          description: Login not found
+  /user/info:
+    get:
+      tags:
+      - User
+      summary: Get your current user information
+      responses:
+        default:
+          description: Current user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users:
+    get:
+      tags:
+      - Admin
+      summary: Get all users
+      responses:
+        default:
+          description: All users
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/User'
+                x-content-type: application/json
+    post:
+      tags:
+      - Admin
+      summary: Add a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "204":
+          description: User added
+  /users/{name}:
+    get:
+      tags:
+      - Admin
+      summary: Get a specific user
+      parameters:
+      - name: name
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        default:
+          description: Retrieved user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      tags:
+      - Admin
+      summary: Update a specific user
+      parameters:
+      - name: name
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      tags:
+      - Admin
+      summary: Delete a specific user
+      parameters:
+      - name: name
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: User deleted
+        "404":
+          description: User not found
+  /oauth2/token:
+    post:
+      tags:
+      - OAuth2
+      summary: Obtain an OAuth 2 Token
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Auth'
+      responses:
+        default:
+          description: Obtained OAuth 2 Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+  /oauth2/invalidate_token:
+    post:
+      tags:
+      - OAuth2
+      summary: Invalidate an OAuth 2 Token
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        default:
+          description: Invalidated OAuth 2 Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+  /oauth2/introspect:
+    post:
+      tags:
+      - OAuth2
+      summary: Introspect an OAuth 2 Token
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Introspection'
+      responses:
+        default:
+          description: Result of OAuth 2 Token Introspection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntrospectionResult'
+  /oauth2/validate:
+    post:
+      tags:
+      - OAuth2
+      summary: Validate an OAuth 2 Token
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Introspection'
+      responses:
+        "204":
+          description: Token is valid
+        "401":
+          description: Token is invalid
+components:
+  schemas:
+    Auth:
+      required:
+      - grant_type
+      type: object
+      properties:
+        grant_type:
+          type: string
+        refresh_token:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+    Token:
+      required:
+      - access_token
+      type: object
+      properties:
+        token_type:
+          type: string
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+        refresh_token:
+          type: string
+        scope:
+          type: string
+      example:
+        access_token: AAAA%2FAAA%3DAAAAAAAA
+        expires_in: 7200
+        token_type: bearer
+        scope: all
+    Introspection:
+      required:
+      - token
+      type: object
+      properties:
+        token:
+          type: string
+        token_hint:
+          type: string
+      example:
+        token: AAAA%2FAAA%3DAAAAAAAA
+        token_hint: access_token
+    IntrospectionResult:
+      required:
+      - active
+      type: object
+      properties:
+        active:
+          type: boolean
+      example:
+        active: true
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+        hasDefaultPassword:
+          type: boolean
+      example:
+        role: admin
+        name: admin
+    Password:
+      required:
+      - newPassword
+      type: object
+      properties:
+        newPassword:
+          type: string

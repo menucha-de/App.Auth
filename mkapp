@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+set -x
+
+env
+
+. /usr/share/mkapp/functions
+
+if [ "$PACKAGING" ]; then  
+  rewrite
+  build -F
+
+  if [ "$PUBLISH" ]; then
+    publish_debs
+  fi
+fi
+
+if [ "$IMAGING" ]; then
+  init
+  update
+  setup auth
+  finish '/opt/peramic-app' '["/opt/peramic-app/auth", "-p", "80"]'
+  cat Dockerfile
+fi
