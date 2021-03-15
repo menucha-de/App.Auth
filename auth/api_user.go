@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	config "github.com/peramic/Util.Auth/go/config"
-	"github.com/peramic/utils"
+	config "github.com/menucha-de/Util.Auth/auth/config"
+	"github.com/menucha-de/utils"
 )
 
 // UserInfoGet get you current user information

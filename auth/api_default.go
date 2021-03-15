@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	loglib "github.com/peramic/logging"
+	loglib "github.com/menucha-de/logging"
 
 	"gopkg.in/oauth2.v3"
 
@@ -16,7 +16,7 @@ import (
 	"gopkg.in/oauth2.v3/server"
 	"gopkg.in/oauth2.v3/store"
 
-	config "github.com/peramic/Util.Auth/go/config"
+	config "github.com/menucha-de/Util.Auth/auth/config"
 )
 
 // AuthenticatedHandlerFunc handler func with login

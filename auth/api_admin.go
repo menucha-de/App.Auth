@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	config "github.com/peramic/Util.Auth/go/config"
-	"github.com/peramic/utils"
+	config "github.com/menucha-de/Util.Auth/auth/config"
+	"github.com/menucha-de/utils"
 )
 
 // AdminUserIDDelete deletes a user

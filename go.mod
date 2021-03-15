@@ -1,4 +1,4 @@
-module github.com/peramic/Util.Auth
+module github.com/menucha-de/Util.Auth
 
 go 1.14
 
@@ -8,8 +8,8 @@ require (
 	github.com/google/uuid v1.2.0 // indirect
 	github.com/gorilla/mux v1.8.0
 	github.com/mattn/go-sqlite3 v1.14.6 // indirect
-	github.com/peramic/logging v0.0.0-20210110162616-b209cc893518
-	github.com/peramic/utils v0.0.0-20201207161042-37d89cd23261
+	github.com/menucha-de/logging v0.0.0-20210315113139-fe4ac23b5e6d
+	github.com/menucha-de/utils v0.0.0-20210315113458-58b282a57797
 	github.com/sirupsen/logrus v1.7.1 // indirect
 	gopkg.in/oauth2.v3 v3.12.0
 )
